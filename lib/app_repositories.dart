@@ -1,3 +1,5 @@
+import 'package:crowdfunding_mobile/data/repositories/donation_categories_repository/donation_categories_provider.dart';
+import 'package:crowdfunding_mobile/data/repositories/donation_categories_repository/donation_categories_repository.dart';
 import 'package:crowdfunding_mobile/data/repositories/login_repository/login_provider.dart';
 import 'package:crowdfunding_mobile/data/repositories/login_repository/login_repository.dart';
 import 'package:crowdfunding_mobile/data/repositories/signup_repository/signup_provider.dart';
@@ -19,6 +21,7 @@ class AppRepositories extends StatelessWidget {
         RepositoryProvider(
             create: (context) =>
                 LoginRepository(loginProvider: LoginProvider())),
+        RepositoryProvider(create: (context)=> DonationCategoriesRepository(donationCategoriesProvider: DonationCategoriesProvider()))
       ],
       child: appBlocs,
     );

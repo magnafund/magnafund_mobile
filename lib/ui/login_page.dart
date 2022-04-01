@@ -2,6 +2,7 @@ import 'package:crowdfunding_mobile/blocs/login_bloc/login_bloc.dart';
 import 'package:crowdfunding_mobile/data/app_colors.dart';
 import 'package:crowdfunding_mobile/data/models/login_model.dart';
 import 'package:crowdfunding_mobile/ui/dashboard_page.dart';
+import 'package:crowdfunding_mobile/ui/donation_categories_page.dart';
 import 'package:crowdfunding_mobile/ui/home_page.dart';
 import 'package:crowdfunding_mobile/ui/signup_page.dart';
 import 'package:flutter/material.dart';
