@@ -29,31 +29,24 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: mainColor,
+          title: const Text("Sign Up"),
+        ),
         body: Container(
       color: white,
       child: ListView(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.only(
-          //     top: 30,
+        
+          // const Padding(
+          //   padding: EdgeInsets.only(top: 70),
+          //   child: Text(
+          //     'Magnafund',
+          //     style: TextStyle(
+          //         color: mainColor, fontSize: 25, fontWeight: FontWeight.bold),
+          //     textAlign: TextAlign.center,
           //   ),
-          //   child: SizedBox(
-          //       height: 150,
-          //       width: 150,
-          //       child: Image.asset(
-          //         'assets/images/logo3.png',
-          //         alignment: Alignment.topCenter,
-          //       )),
           // ),
-          const Padding(
-            padding: EdgeInsets.only(top: 70),
-            child: Text(
-              'Magnafund',
-              style: TextStyle(
-                  color: mainColor, fontSize: 25, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
             child: SizedBox(
@@ -175,6 +168,10 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
 
+          SizedBox(
+       height: MediaQuery.of(context).size.height * 0.05,
+          ),
+
           BlocConsumer<SignupBloc, SignupState>(
             listener: (context, state) {
               if (state is SignUpErrorState) {
@@ -288,7 +285,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: SizedBox(
               height: 20,
               child: Text(
-                'have an account?',
+                'Already have an account?',
                 style: TextStyle(
                   color: mainColor,
                   fontSize: 15,

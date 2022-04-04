@@ -6,6 +6,7 @@ import 'package:crowdfunding_mobile/widgets/loader.dart';
 import 'package:crowdfunding_mobile/widgets/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DonationCategoriesPage extends StatefulWidget {
   const DonationCategoriesPage({ Key? key }) : super(key: key);
@@ -56,7 +57,7 @@ class _DonationCategoriesPageState extends State<DonationCategoriesPage> {
           },
         ),
       ),
-      bottomNavigationBar: const BottomNavBarFb5()
+      // bottomNavigationBar: const BottomNavBarFb5()
 
     );
   }
@@ -77,9 +78,9 @@ class _DonationCategoriesPageState extends State<DonationCategoriesPage> {
                 //     context,
                 //     PageTransition(
                 //       child: ProfilePage(
-                //         productId: productsResPonseModel[index].id,
+                //         categoryId: donationsCategoryResponseModel.data![index].id,
                 //         key: widget.key,
-                //         userType: widget.userType,
+                      
                 //       ),
                 //       type: PageTransitionType.leftToRight,
                 //     ));
