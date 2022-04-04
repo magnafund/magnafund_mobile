@@ -4,6 +4,8 @@ import 'package:crowdfunding_mobile/data/repositories/donation_categories_reposi
 import 'package:crowdfunding_mobile/data/repositories/donation_categories_repository/donation_categories_repository.dart';
 import 'package:crowdfunding_mobile/data/repositories/login_repository/login_provider.dart';
 import 'package:crowdfunding_mobile/data/repositories/login_repository/login_repository.dart';
+import 'package:crowdfunding_mobile/data/repositories/payment_repository/payment_provider.dart';
+import 'package:crowdfunding_mobile/data/repositories/payment_repository/payment_repository.dart';
 import 'package:crowdfunding_mobile/data/repositories/signup_repository/signup_provider.dart';
 import 'package:crowdfunding_mobile/data/repositories/signup_repository/signup_repository.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,9 @@ class AppRepositories extends StatelessWidget {
         RepositoryProvider(
             create: (context) => AllDonationsRepository(
                 allDonationProvider: AllDonationProvider())),
+        RepositoryProvider(
+            create: (context) =>
+                PaymentRepository(paymentProvider: PaymentProvider()))
       ],
       child: appBlocs,
     );

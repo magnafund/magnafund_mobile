@@ -20,7 +20,8 @@ class PaymentProvider{
       'Content-Type' : 'application/json'
       };
 
-      var response = await http.post(Uri.parse('https://cf-donations-api.herokuapp.com/api/Payment/process-payment'), headers: headers, body: requestBody);
+      print(requestBody);
+      var response = await http.post(Uri.parse('https://cf-donations-api.herokuapp.com/api/Payment/process-payment'), headers: headers, body: jsonEncode(requestBody));
       print(response.statusCode);
 
     if (response.statusCode != 200) {

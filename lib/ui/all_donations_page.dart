@@ -1,6 +1,8 @@
 import 'package:crowdfunding_mobile/blocs/all_donations_bloc/all_donations_bloc.dart';
+import 'package:crowdfunding_mobile/blocs/payment_bloc/payments_bloc.dart';
 import 'package:crowdfunding_mobile/data/app_colors.dart';
 import 'package:crowdfunding_mobile/data/models/all_donations_model.dart';
+import 'package:crowdfunding_mobile/data/models/payment_model.dart';
 import 'package:crowdfunding_mobile/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -173,6 +175,7 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context, setState) {
           return Dialog(
+            backgroundColor: white,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView(
@@ -195,40 +198,36 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
                       key: _formKey,
                       child: Column(
                         children: [
-                        
-                           TextFormField(
-                                controller: nameController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Name (Optional)',
-                                    hintText: 'eg. +26377xxxxxxx'),
-                                onSaved: (val) {}),
-                          
-                         TextFormField(
-                                controller: amountController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Amount in RTGS',
-                                    hintText: 'eg. 500'),
-                                validator: (val) {
-                                  if (val!.isEmpty) {
-                                    return 'Field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (val) {}),
-                         
-                           TextFormField(
-                                controller: accountNumberController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Phone Number',
-                                    hintText: 'eg. 077xxxxxxx'),
-                                validator: (val) {
-                                  if (val!.isEmpty) {
-                                    return 'Field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (val) {}),
-                          
+                          TextFormField(
+                              controller: nameController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Name (Optional)',
+                                  hintText: 'eg. +26377xxxxxxx'),
+                              onSaved: (val) {}),
+                          TextFormField(
+                              controller: amountController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Amount in RTGS',
+                                  hintText: 'eg. 500'),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return 'Field cannot be empty';
+                                }
+                                return null;
+                              },
+                              onSaved: (val) {}),
+                          TextFormField(
+                              controller: accountNumberController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Phone Number',
+                                  hintText: 'eg. 077xxxxxxx'),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return 'Field cannot be empty';
+                                }
+                                return null;
+                              },
+                              onSaved: (val) {}),
                         ],
                       ),
                     ),
@@ -236,32 +235,81 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
                   const SizedBox(
                     height: 32,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      TextButton(
-                        child: const Text('BACK',
-                            style: TextStyle(
-                                color: Color.fromRGBO(52, 131, 39, 1),
-                                fontSize: 15)),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      SizedBox(width: 16),
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          primary: Color.fromRGBO(52, 131, 39, 1),
-                          backgroundColor: const Color.fromRGBO(52, 131, 39, 1),
-                          onSurface: Color.fromRGBO(52, 131, 39, 1),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        TextButton(
+                          child: const Text('BACK',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(52, 131, 39, 1),
+                                  fontSize: 15)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                        child: const Text(
-                          'Donate',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        SizedBox(width: 16),
+                        BlocConsumer<PaymentsBloc, PaymentsState>(
+                          listener: (context, state) {
+                            if (state is PaymentErrorState) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content:
+                                      Text('Payment Failed ${state.error}')));
+                            }
+
+                            if (state is PaymentLoadedState) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Payment Successful'),
+                                backgroundColor: mainColor,
+                              ));
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is PaymentLoadingState) {
+                              return Column(
+                                children: [
+                                  CircularProgressIndicator(
+                                    key: widget.key,
+                                  ),
+                                  const Text(
+                                    'Initiating payment...',
+                                    style: TextStyle(color: mainColor),
+                                  )
+                                ],
+                              );
+                            } else {
+                            return TextButton(
+                              onPressed: () {
+
+                                BlocProvider.of<PaymentsBloc>(context).add(
+                                  MakePaymentEvent(
+                                    paymentModel: PaymentModel(
+                                      accountNumber: accountNumberController.text,
+                                      amount: int.parse(amountController.text),
+                                      donationId:  id,
+                                      name: nameController.text,
+                                      paymentMethod: 1 ),
+                                    
+                                    )
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                primary: const Color.fromRGBO(52, 131, 39, 1),
+                                backgroundColor:
+                                    const Color.fromRGBO(52, 131, 39, 1),
+                                onSurface: const Color.fromRGBO(52, 131, 39, 1),
+                              ),
+                              child: const Text(
+                                'Donate',
+                                style:
+                                    TextStyle(color: Colors.white, fontSize: 15),
+                              ),
+                            );
+                          }}
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

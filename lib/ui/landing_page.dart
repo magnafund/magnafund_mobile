@@ -63,7 +63,7 @@ class _LandingPageState extends State<LandingPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 30, top: 10, right: 30),
               child: ElevatedButton(
-                child: const Text('Donor',
+                child: const Text('Donate',
                     style: TextStyle(
                       color: white,
                       fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _LandingPageState extends State<LandingPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 30, top: 10, right: 30),
               child: ElevatedButton(
-                child: const Text('Beneficiary',
+                child: const Text('Recieve Funds',
                     style: TextStyle(
                       color: white,
                       fontWeight: FontWeight.bold,
