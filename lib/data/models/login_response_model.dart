@@ -46,13 +46,13 @@ class Data {
     });
 
     int id;
-    String beneficiaryName;
-    String email;
-    String phoneNumber;
-    String password;
+    dynamic beneficiaryName;
+    dynamic email;
+    dynamic phoneNumber;
+    dynamic password;
     DateTime? dateCreated;
     int status;
-    String token;
+    dynamic token;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"] == null ? null : json["id"],

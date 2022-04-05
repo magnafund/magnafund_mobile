@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final donationsByCategoryModel = donationsByCategoryModelFromJson(jsonString);
+//     final donationsCategoryResponseModel = donationsCategoryResponseModelFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-DonationsByCategoryModel donationsByCategoryModelFromJson(String str) => DonationsByCategoryModel.fromJson(json.decode(str));
+DonationsCategoryResponseModel donationsCategoryResponseModelFromJson(String str) => DonationsCategoryResponseModel.fromJson(json.decode(str));
 
-String donationsByCategoryModelToJson(DonationsByCategoryModel data) => json.encode(data.toJson());
+String donationsCategoryResponseModelToJson(DonationsCategoryResponseModel data) => json.encode(data.toJson());
 
-class DonationsByCategoryModel {
-    DonationsByCategoryModel({
+class DonationsCategoryResponseModel {
+    DonationsCategoryResponseModel({
         required this.success,
         required this.data,
         required this.messages,
@@ -20,7 +20,7 @@ class DonationsByCategoryModel {
     List<Datum>? data;
     dynamic messages;
 
-    factory DonationsByCategoryModel.fromJson(Map<String, dynamic> json) => DonationsByCategoryModel(
+    factory DonationsCategoryResponseModel.fromJson(Map<String, dynamic> json) => DonationsCategoryResponseModel(
         success: json["success"] == null ? null : json["success"],
         data: json["data"] == null ? null : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         messages: json["messages"],

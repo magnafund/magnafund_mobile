@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.crowdfunding_mobile">
    <application
-        android:label="crowdfunding_mobile"
+        android:label="Magnafund"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

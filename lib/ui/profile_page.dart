@@ -1,5 +1,6 @@
 import 'package:crowdfunding_mobile/blocs/login_bloc/login_bloc.dart';
 import 'package:crowdfunding_mobile/data/app_colors.dart';
+import 'package:crowdfunding_mobile/ui/landing_page.dart';
 import 'package:crowdfunding_mobile/ui/login_page.dart';
 import 'package:crowdfunding_mobile/widgets/list.dart';
 import 'package:crowdfunding_mobile/widgets/nav_bar.dart';
@@ -112,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ));
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LandingPage()),
                   );
                 }),
                 ],

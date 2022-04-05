@@ -1,5 +1,6 @@
 import 'package:crowdfunding_mobile/data/app_colors.dart';
 import 'package:crowdfunding_mobile/ui/dashboard_page.dart';
+import 'package:crowdfunding_mobile/ui/donation_categories_page.dart';
 import 'package:crowdfunding_mobile/ui/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -41,14 +42,14 @@ class BottomNavBarFb5 extends StatelessWidget {
                          );
                     }),
                 IconBottomBar(
-                    text: "History",
+                    text: "Categories",
                     icon: Icons.history,
                     selected: true,
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const ProfilePage()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const DonationCategoriesPage()),
+                      );
                     }),
                 IconBottomBar(
                     text: "Diary",
