@@ -80,11 +80,27 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
                       //   width: 2.0,
                       // ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: ListTile(
-                        leading:
-                            allDonationsResponseModel.data![index].categoryId ==
+                    child: Column(
+                      children: [
+                         ListTile(
+                        title: 
+                        Text(
+                          allDonationsResponseModel.data![index].title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18, color: white),
+                        ),
+                      
+                      ),
+                        Image.network(
+                          allDonationsResponseModel.data![index].imageUrl.toString(),
+                          fit: BoxFit.cover,
+                          height: MediaQuery.of(context).size.height * 0.45,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: ListTile(
+                            leading: allDonationsResponseModel
+                                        .data![index].categoryId ==
                                     1
                                 ? const Icon(
                                     Icons.business,
@@ -143,27 +159,70 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
                                                             size: 20.0,
                                                           )
                                                         : null,
-                        title: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            allDonationsResponseModel.data![index].title,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: white,
-                                fontSize: 16),
+                            title: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                allDonationsResponseModel.data![index].shortDescription,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: white,
+                                    fontSize: 16),
+                              ),
+                            ),
+                            // subtitle: 
+                            // Row(
+                            //   children: [
+                            //     Padding(
+                            //       padding: const EdgeInsets.all(8.0),
+                            //       child: Text(
+                            //         "Amlount Raised" +
+                            //         allDonationsResponseModel
+                            //             .data![index].amountRaised.toString(),
+                            //         style: const TextStyle(
+                            //             color: black, fontWeight: FontWeight.bold),
+                            //       ),
+                            //     ),
+
+                            //      Padding(
+                            //       padding: const EdgeInsets.all(8.0),
+                            //       child: Text( "Amount Goal" +
+                            //         allDonationsResponseModel
+                            //             .data![index].amountGoal.toString(),
+                            //         style: const TextStyle(
+                            //             color: black, fontWeight: FontWeight.bold),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           ),
                         ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            allDonationsResponseModel
-                                .data![index].shortDescription,
-                            style: const TextStyle(
-                                color: white, fontWeight: FontWeight.w100),
-                          ),
-                        ),
-                      ),
-                    ))),
+                         Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Amount Raised ZWL" +
+                                    allDonationsResponseModel
+                                        .data![index].amountRaised.toString(),
+                                    style: const TextStyle(
+                                        color: white, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+
+                                 Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text( "Goal ZWL" +
+                                    allDonationsResponseModel
+                                        .data![index].amountGoal.toString(),
+                                    style: const TextStyle(
+                                        color: white, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      ],
+                    )
+                    )),
           );
         });
   }
@@ -250,49 +309,46 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
                         ),
                         SizedBox(width: 16),
                         BlocConsumer<PaymentsBloc, PaymentsState>(
-                          listener: (context, state) {
-                            if (state is PaymentErrorState) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content:
-                                      Text('Payment Failed ${state.error}')));
-                            }
+                            listener: (context, state) {
+                          if (state is PaymentErrorState) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text('Payment Failed ${state.error}')));
+                          }
 
-                            if (state is PaymentLoadedState) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Payment Successful'),
-                                backgroundColor: mainColor,
-                              ));
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is PaymentLoadingState) {
-                              return Column(
-                                children: [
-                                  CircularProgressIndicator(
-                                    key: widget.key,
-                                  ),
-                                  const Text(
-                                    'Initiating payment...',
-                                    style: TextStyle(color: mainColor),
-                                  )
-                                ],
-                              );
-                            } else {
+                          if (state is PaymentLoadedState) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Payment Successful'),
+                              backgroundColor: mainColor,
+                            ));
+                          }
+                        }, builder: (context, state) {
+                          if (state is PaymentLoadingState) {
+                            return Column(
+                              children: [
+                                CircularProgressIndicator(
+                                  key: widget.key,
+                                ),
+                                const Text(
+                                  'Initiating payment...',
+                                  style: TextStyle(color: mainColor),
+                                )
+                              ],
+                            );
+                          } else {
                             return TextButton(
                               onPressed: () {
-
-                                BlocProvider.of<PaymentsBloc>(context).add(
-                                  MakePaymentEvent(
-                                    paymentModel: PaymentModel(
-                                      accountNumber: accountNumberController.text,
+                                BlocProvider.of<PaymentsBloc>(context)
+                                    .add(MakePaymentEvent(
+                                  paymentModel: PaymentModel(
+                                      accountNumber:
+                                          accountNumberController.text,
                                       amount: int.parse(amountController.text),
-                                      donationId:  id,
+                                      donationId: id,
                                       name: nameController.text,
-                                      paymentMethod: 1 ),
-                                    
-                                    )
-                                );
+                                      paymentMethod: 1),
+                                ));
                               },
                               style: TextButton.styleFrom(
                                 primary: const Color.fromRGBO(52, 131, 39, 1),
@@ -302,12 +358,12 @@ class _AllDonationsPageState extends State<AllDonationsPage> {
                               ),
                               child: const Text(
                                 'Donate',
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 15),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
                               ),
                             );
-                          }}
-                        ),
+                          }
+                        }),
                       ],
                     ),
                   )

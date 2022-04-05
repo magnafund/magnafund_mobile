@@ -4,6 +4,7 @@ import 'package:crowdfunding_mobile/ui/donations_menu_page.dart';
 import 'package:crowdfunding_mobile/ui/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
